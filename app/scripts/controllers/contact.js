@@ -8,7 +8,81 @@
  * Controller of the mobiiltelefonid24App
  */
 angular.module('mobiiltelefonid24App')
-  .controller('ContactCtrl', function () {
+  .controller('ContactCtrl', function ($scope, $http) {
+    $scope.page = {
+      title: 'Kontakt',
+      description: 'Mobiiltelefonid24 tegeleb mobiiltelefonide ja tarvikute müügiga.'
+    };
 
+    $scope.firm = {
+      email: {
+        label: 'Email:',
+        value: 'mobiiltelefonid24@gmail.com'
+      },
+      phone: {
+        label: 'Telefoni number:',
+        value: '+37255540930'
+      }
+    };
+
+    $scope.form = {
+      title: 'Kontaktivorm',
+      name: {
+        label: 'Nimi:',
+        value: 'Nimi'
+      },
+      email: {
+        label: 'E-mail:',
+        value: 'E-mail'
+      },
+      query: {
+        label: 'Küsimus',
+        value: 'Küsimus'
+      },
+      send: 'Saada',
+      close: 'Sulge'
+    };
+
+    $scope.mail = {
+      name: '',
+      email: '',
+      query: ''
+    };
+
+    $scope.alert = {
+      type: '',
+      milliseconds: 100000,
+      msg: '',
+      show: false
+    };
+
+    $scope.closeAlert = function (index) {
+      $scope.alert.show = false;
+    };
+
+    $scope.submit = function(mail){
+      $scope.alert.type = 'success';
+      $scope.alert.msg = 'Kiri saadetud!';
+      $scope.alert.show = true;
+      console.log(mail);
+
+      $http(
+      {
+        method: 'POST',
+        url: 'api/email.php',
+        data : $scope.mail
+      }
+      ).then(function(message) {
+        console.log(message, 'success');
+        $scope.alert.type = 'success';
+        $scope.message = message;
+        $scope.alert.show = true;
+      }, function (message) {
+        console.log(message, 'failed');
+        $scope.alert.type = 'danger';
+        $scope.message = message;
+        $scope.alert.show = true;
+      });
+    }
 
   });

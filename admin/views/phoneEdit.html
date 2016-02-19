@@ -1,0 +1,92 @@
+<form role="form" ng-controller="EditPhoneCtrl">
+  <div class="form-group">
+    <div class="form-group">
+        <label for="name">Mudel:{{phone.name}}</label>
+        <div class="input-group">
+          <input id="name" class="form-control" type="text" ng-model="phone.name" placeholder="Telefoni mudel">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" ng-click="prefill(phone.name)" ng-disabled="!phone.name.length && phone.name.length < 1">Täida väljad</button>
+          </span>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="desc">Kirjeldus:</label>
+      <textarea class="form-control" id="desc" ng-model="phone.description" type="text" rows="4" cols="25" placeholder="Telefoni kirjeldus"></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="form-group">
+        <label for="price">Hind:</label>
+        <input class="form-control" id="price" type="text" ng-model="phone.price" placeholder="Telefoni hind">
+      </div>
+      <div class="form-group">
+        <label for="sim">Sim</label>
+        <input class="form-control" id="sim" type="text" ng-model="phone.sim" placeholder="Sim-i tüüp">
+      </div>
+      <div class="form-group">
+        <label for="size">Mõõtmed</label>
+        <input class="form-control" id="size" type="text" ng-model="phone.size" placeholder="Telefoni mõõtmed">
+      </div>
+      <div class="form-group">
+        <label for="weight">Kaal</label>
+        <input class="form-control" id="weight" type="text" ng-model="phone.weight" placeholder="Telefoni kaal">
+      </div>
+      <div class="form-group">
+        <label for="cardSlot">Mälukaart</label>
+        <input class="form-control" id="cardSlot" type="text" ng-model="phone.cardSlot" placeholder="Mälukaardi tüüp">
+      </div>
+
+      <div class="form-group">
+        <label for="cameraF">Esimene kaamera</label>
+        <input class="form-control" id="cameraF" type="text" ng-model="phone.cameraF" placeholder="Eesmine kaamera">
+      </div>
+      <div class="form-group">
+        <label for="cameraB">Tagumine kaamera</label>
+        <input class="form-control" id="cameraB" type="text" ng-model="phone.cameraB" placeholder="Tagumine kaamera">
+      </div>
+      <div class="form-group">
+        <label for="video">Video</label>
+        <input class="form-control" id="video" type="text" ng-model="phone.video" placeholder="Video režiim">
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="form-group">
+        <label for="cpu">CPU</label>
+        <input class="form-control" id="cpu" type="text" ng-model="phone.cpu" placeholder="Protsessor">
+      </div>
+      <div class="form-group">
+        <label for="os">OS</label>
+        <input class="form-control" id="os" type="text" ng-model="phone.os" placeholder="Operatsioonisüsteem">
+      </div>
+      <div class="form-group">
+        <label for="gps">GPS</label>
+        <input class="form-control" id="gps" type="text" ng-model="phone.gps" placeholder="GPS">
+      </div>
+      <div class="form-group">
+        <label for="internal">Sisemälu</label>
+        <input class="form-control" id="internal" type="text" ng-model="phone.internal" placeholder="Sisemälu">
+      </div>
+      <div class="form-group">
+        <label for="gprs">GPRS</label>
+        <input class="form-control" id="gprs" type="text" ng-model="phone.gprs" placeholder="GPRS">
+      </div>
+      <div class="form-group">
+        <label for="nfc">NFC</label>
+        <input class="form-control" id="nfc" type="text" ng-model="phone.nfc" placeholder="NFC">
+      </div>
+      <div class="form-group">
+        <label for="wlan">WLAN</label>
+        <input class="form-control" id="wlan" type="text" ng-model="phone.wlan" placeholder="Wifi, hotspot jms.">
+      </div>
+      <div class="form-group">
+        <div class="checkbox">
+          <label><input type="checkbox" ng-model="phone.used">Kasutatud</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="file" file-model="phone.pictures" multiple>
+  </div>
+</form>

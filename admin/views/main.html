@@ -1,0 +1,8 @@
+<div ng-repeat="panel in panels" class="panel panel-default">
+  <div class="panel-heading" ng-click="panel.isCollapsed = !panel.isCollapsed">
+    <h3 class="panel-title pull-left">{{panel.title}}</h3>
+    <button class="btn btn-success glyphicon glyphicon-plus pull-right"></button>
+    <div class="clearfix"></div>
+  </div>
+  <div class="panel-body" uib-collapse="panel.isCollapsed" ng-include="panel.template"></div>
+</div>

@@ -1,1 +1,37 @@
-<p>This is the contact view.</p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{page.title}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-8">
+      <div class="row">
+        <p>{{page.description}}</p>
+        <label for="email">{{firm.email.label}}</label>
+        <p id="email">{{firm.email.value}}</p>
+        <label for="number">{{firm.phone.label}}</label>
+        <p id="number">{{firm.phone.value}}</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{form.title}}</h3>
+        </div>
+        <form class="form-signin" ng-submit="submit(mail)">
+          <div class="panel-body">
+            <label for="name">{{form.name.label}}</label><br />
+            <input id="name" type="text" placeholder="{{form.name.value}}" required class="form-control" ng-model="mail.name"><br />
+            <label for="mail">{{form.name.label}}</label><br />
+            <input id="mail" type="email" placeholder="{{form.email.value}}" required class="form-control" ng-model="mail.email"><br />
+            <label for="question">{{form.query.label}}</label><br />
+            <textarea id="question" type="text" placeholder="{{form.query.value}}" required rows="4" cols="25" class="form-control" ng-model="mail.query" style="resize: none;"></textarea>
+          </div>
+          <div class="panel-footer">
+            <uib-alert type="{{alert.type}}" dismiss-on-timeout="{{alert.milliseconds}}" close="closeAlert($index)" ng-show="alert.show">{{alert.msg}}</uib-alert>
+            <button class="btn btn-primary" type="submit">{{form.send}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
