@@ -13,14 +13,56 @@ angular.module('mobiiltelefonid24App')
 
     this.findByName = function (name) {
       return $http({
-                method: 'GET',
-                url: 'api/phones.php',
-                data : {
-                  type: 'findByName',
-                  name: name
-                }
-              });
+        method: 'GET',
+        url: '../api/phones.php',
+        params : {
+          type: 'findByName',
+          name: name
+        }
+      });
     };
-
+    
+    this.findAllPhones = function () {
+      return $http({
+        method: 'GET',
+        url: '../api/phones.php',
+        params : {
+          type: 'findAllPhones'
+        }
+      });
+    };
+    
+    this.deleteById = function (id) {
+      return $http({
+        method: 'POST',
+        url: '../api/phones.php',
+        data : {
+          type: 'deleteById',
+          id: id
+        }
+      });
+    };
+    
+    this.activateById = function (id) {
+      return $http({
+        method: 'POST',
+        url: '../api/phones.php',
+        data : {
+          type: 'activateById',
+          id: id
+        }
+      });
+    };
+    
+    this.savePhone = function (phone) {
+      return $http({
+        method: 'POST',
+        url: '../api/phones.php',
+        data : {
+          type: 'savePhone',
+          phone: phone
+        }
+      });
+    };
 
   });

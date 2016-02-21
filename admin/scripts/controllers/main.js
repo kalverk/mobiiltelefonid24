@@ -12,11 +12,13 @@ angular.module('mobiiltelefonid24App')
 
     $scope.panels = [
       {
+        id: 'panel_0',
         title: 'Lisa uus telefon',
         isCollapsed: true,
         template: 'views/phoneEdit.html'
       },
       {
+        id: 'panel_1',
         title: 'Muuda olemasolevad',
         isCollapsed: true,
         template: 'views/phones.html'

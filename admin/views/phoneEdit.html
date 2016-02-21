@@ -87,6 +87,15 @@
     </div>
   </div>
   <div class="form-group">
-    <input type="file" file-model="phone.pictures" multiple>
+    <input class="file-upload" type="file" file-upload multiple />
+    <div class="row">
+      <div class="col-xs-6 col-md-3" ng-repeat="image in phone.pictures">
+        <a ng-click="removePicture($index)" href=""> <i class="pull-right glyphicon glyphicon-remove"></i></a>
+        <a href="" class="thumbnail">
+          <img src="{{image.src}}">
+        </a>
+      </div>
+    </div>
   </div>
+  <button class="btn btn-primary" type="button" ng-click="save()">Salvesta</button>
 </form>

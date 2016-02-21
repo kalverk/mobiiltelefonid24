@@ -50,6 +50,9 @@
 </div>
 
 <div class="container">
+  <div ng-controller="AlertCtrl"> 
+    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="{{alert.ms}}">{{alert.msg}}</uib-alert>
+  </div>
   <div ng-view=""></div>
 </div>
 
@@ -84,7 +87,12 @@
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/phone.edit.js"></script>
 <script src="scripts/controllers/phones.js"></script>
+<script src="scripts/controllers/alert.js"></script>
+<script src="scripts/controllers/modal.js"></script>
 <script src="scripts/services/phones.js"></script>
+<script src="scripts/services/alert.js"></script>
+<script src="scripts/services/phone.edit.js"></script>
+<script src="scripts/directives/file.upload.js"></script>
 <!-- endbuild -->
 </body>
 </html>
