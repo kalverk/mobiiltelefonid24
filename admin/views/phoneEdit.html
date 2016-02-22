@@ -92,7 +92,7 @@
       <div class="col-xs-6 col-md-3" ng-repeat="image in phone.pictures">
         <a ng-click="removePicture($index)" href=""> <i class="pull-right glyphicon glyphicon-remove"></i></a>
         <a href="" class="thumbnail">
-          <img src="{{image.src}}">
+          <img ng-src="{{image.src}}">
         </a>
       </div>
     </div>

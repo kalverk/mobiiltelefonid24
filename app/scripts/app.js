@@ -45,6 +45,11 @@ angular
         controller: 'ContactCtrl',
         controllerAs: 'contact'
       })
+      .when('/info/:id', {
+        templateUrl: 'views/phoneDetails.html',
+        controller: 'PhoneDetailsCtrl',
+        controllerAs: 'phoneDetails'
+      })
       .otherwise({
         redirectTo: '/'
       });

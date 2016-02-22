@@ -1,25 +1,15 @@
-<!--
-<div class="container ng-scope" ng-view=""><div class="page-header ng-scope">
-  <h2>{{main.title}}</h2>
-</div>
-  <div class="panel panel-default ng-scope" ng-repeat="phone in phoneList">
-
-    <div class="panel-heading">
-      <h3 class="panel-title"><a href="" ng-click="viewDetails(phone.used, phone.id)" class="ng-binding">Nokia E7</a></h3>
+<h2>Top 10</h2>
+<div class="panel panel-default ng-scope" ng-repeat="phone in phoneList track by phone.id">
+  <div class="panel-heading">
+    <h3 class="panel-title"><a href="" class="ng-binding" ng-click="details(phone)">{{phone.name}}</a></h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-3">
+      <img ng-if="phone.pictures" class="media-object pull-left" ng-src="{{getFirstPicture(phone.pictures)}}">
     </div>
-    <div class="panel-body">
-      <div class="media">
-        <a class="pull-right" href="" ng-click="viewDetails(phone.used, phone.id)">
-          <img class="media-object" src="/handle/uploads/small/e7sinine.jpg">
-        </a>
-        <div class="media-body">
-          <h5 class="ng-binding">Erksate värvidega AMOLED ekraan. Kriimude vastu Gorilla klaas. Sisemälu 16GB, mahutab hulgaliselt pilte, videoid, muusikat ja muud. Teeb hea kvaliteediga pilte, kaamera 8MP. Võimalik salvestada 720p videot. Toetab A-GPSi, olemas wifi ja palju muid lisasid.</h5>
-          <b class="ng-binding">Hind: €40</b>
-        </div>
-      </div>
+    <div class="col-md-9">
+      <p>{{phone.description}}</p>
+      <b>Hind: €{{phone.price}}</b>
     </div>
   </div>
-
 </div>
--->
-<p>This is the main view.</p>

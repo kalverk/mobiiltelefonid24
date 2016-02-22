@@ -41,8 +41,8 @@
             <ul class="nav navbar-nav" ng-click="">
               <li ng-class="{ active: isActive('/uued_telefonid')}"><a ng-href="#/uued_telefonid">Uued telefonid</a></li>
               <li ng-class="{ active: isActive('/kasutatud_telefonid')}"><a ng-href="#/kasutatud_telefonid">Kasutatud telefonid</a></li>
-              <li ng-class="{ active: isActive('/tarvikud')}"><a ng-href="#/tarvikud">Tarvikud</a></li>
-              <li ng-class="{ active: isActive('/kontakt')}"><a ng-href="#/kontakt">Contact</a></li>
+              <!--<li ng-class="{ active: isActive('/tarvikud')}"><a ng-href="#/tarvikud">Tarvikud</a></li>-->
+              <li ng-class="{ active: isActive('/kontakt')}"><a ng-href="#/kontakt">Kontakt</a></li>
             </ul>
           </div>
         </div>
@@ -50,13 +50,11 @@
     </div>
 
     <div class="container">
+      <div ng-controller="AlertCtrl">
+        <uib-alert class="custom-alert" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="{{alert.ms}}">{{alert.msg}}</uib-alert>
+      </div>
       <div ng-view=""></div>
     </div>
-
-    <div class="footer">
-      TODO contact info
-    </div>
-
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -91,7 +89,12 @@
         <script src="scripts/controllers/contact.js"></script>
         <script src="scripts/controllers/phones.js"></script>
         <script src="scripts/controllers/accessories.js"></script>
+        <script src="scripts/controllers/alert.js"></script>
+        <script src="scripts/controllers/modal.js"></script>
+        <script src="scripts/controllers/phone.details.js"></script>
         <script src="scripts/services/phones.js"></script>
+        <script src="scripts/services/alert.js"></script>
+        <script src="scripts/services/email.js"></script>
         <!-- endbuild -->
 </body>
 </html>

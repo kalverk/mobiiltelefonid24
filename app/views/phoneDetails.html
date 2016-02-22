@@ -1,0 +1,62 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <strong>
+        {{phone.name}}
+      </strong>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="desc">Kirjeldus:</label>
+        <p id="desc">{{phone.description}}</p>
+        <button class="btn btn-default btn-xs" ng-click="isCollapsed = !isCollapsed">Vaata detaile</button>
+      </div>
+      <div uib-collapse="isCollapsed">
+        <div class="col-md-4">
+          <label ng-if="phone.sim" for="sim">Sim:</label>
+          <p ng-if="phone.sim" id="sim">{{phone.sim}}</p>
+          <label ng-if="phone.size" for="size">Mõõtmed:</label>
+          <p ng-if="phone.size" id="size">{{phone.size}}</p>
+          <label ng-if="phone.weight" for="weight">Kaal:</label>
+          <p ng-if="phone.weight" id="weight">{{phone.weight}}</p>
+          <label ng-if="phone.cardSlot" for="cardSlot">Mälukaart:</label>
+          <p ng-if="phone.cardSlot" id="cardSlot">{{phone.cardSlot}}</p>
+        </div>
+        <div class="col-md-4">
+          <label ng-if="phone.cameraF" for="cameraF">Esimene kaamera:</label>
+          <p ng-if="phone.cameraF" id="cameraF">{{phone.cameraF}}</p>
+          <label ng-if="phone.cameraB" for="cameraB">Tagumine kaamera:</label>
+          <p ng-if="phone.cameraB" id="cameraB">{{phone.cameraB}}</p>
+          <label ng-if="phone.video" for="video">Video:</label>
+          <p ng-if="phone.video" id="video">{{phone.video}}</p>
+          <label ng-if="phone.os" for="os">Operatsioonisüsteem:</label>
+          <p ng-if="phone.os" id="os">{{phone.os}}</p>
+        </div>
+        <div class="col-md-4">
+          <label ng-if="phone.cpu" for="cpu">CPU:</label>
+          <p ng-if="phone.cpu" id="cpu">{{phone.cpu}}</p>
+          <label ng-if="phone.gps" for="gps">GPS:</label>
+          <p ng-if="phone.gps" id="gps">{{phone.gps}}</p>
+          <label ng-if="phone.internal" for="internal">Mälu:</label>
+          <p ng-if="phone.internal" id="internal">{{phone.internal}}</p>
+          <label ng-if="phone.wlan" for="wlan">WLAN:</label>
+          <p ng-if="phone.wlan" id="wlan">{{phone.wlan}}</p>
+        </div>
+      </div>
+      <br/>
+    </div>
+    <div class="row" ng-if="phone.pictures">
+      <uib-carousel no-wrap="noWrapSlides">
+        <uib-slide ng-repeat="picture in pictureList(phone.pictures)" active="slide.active" index="slide.id">
+          <img ng-src="{{picture}}" style="margin:auto;">
+        </uib-slide>
+      </uib-carousel>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <a class="btn btn-primary btn-lg" role="button" ng-click="makePurchase(phone)">Osta</a>
+    <h4 class=pull-right>Hind: €{{phone.price}}</h4>
+  </div>
+</div>

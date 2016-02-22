@@ -19,6 +19,12 @@ $data = (array)json_decode(file_get_contents('phones.json'), true);
 $result = [];
 
 switch ($type) {
+    case 'findTop10':
+      $result = findTop10();
+      break;
+    case 'findById':
+      $result = findById();
+      break;
     case 'findByName':
       $result = findByName();
       break;
@@ -44,23 +50,43 @@ switch ($type) {
       header("HTTP/1.0 400 Bad Request");
 }
 
+function findTop10 () {
+  $data = $GLOBALS['data'];
+
+  $result = array();
+  for ($i = 0; $i < 10; $i += 1) {
+    $result[] = $data[$i];
+  }
+
+  return $result;
+
+  /*try {
+    $sql = "SELECT * FROM phones where visible=1 ORDER BY views DESC LIMIT 10";
+    $result = DB::query($sql);
+    return $result;
+  } catch(MeekroDBException $e) {
+    return 'Error ' . $e;
+  }*/
+
+}
+
 function findByName () {
   $name = isset($_GET['name']) ? $_GET['name'] : '';
-  
+
   if ($name === '') {
     header("HTTP/1.0 400 Bad Request");
     return 'No mobile found';
   }
-  
+
   $data = $GLOBALS['data'];
   for ($i = 0; $i < count($data); $i += 1) {
     $row = $data[$i];
-    
+
     if (strpos(strtolower($row['name']), strtolower($name)) !== false) {
       return $row;
     }
   }
-  
+
   //try {
   //  $sql = "SELECT * FROM phones where name = " . mysql_escape_string($name);
   //  $result = DB::query($sql);
@@ -69,17 +95,45 @@ function findByName () {
   //  header("HTTP/1.0 400 Bad Request");
   //  return 'Error ' . $e;
   //}
-  
+
+}
+
+function findById () {
+  $id = isset($_GET['id']) ? $_GET['id'] : '';
+
+  if ($id === '') {
+    header("HTTP/1.0 400 Bad Request");
+    return 'No mobile found';
+  }
+
+  $data = $GLOBALS['data'];
+  for ($i = 0; $i < count($data); $i += 1) {
+    $row = $data[$i];
+
+    if ($row['id'] === intval($id)) {
+      return $row;
+    }
+  }
+
+  //try {
+  //  $sql = "SELECT * FROM phones where id = " . intval($id);
+  //  $result = DB::query($sql);
+  //  return $result;
+  //} catch(MeekroDBException $e) {
+  //  header("HTTP/1.0 400 Bad Request");
+  //  return 'Error ' . $e;
+  //}
+
 }
 
 function findAllPhones ($used) {
   $result = [];
-  
+
   $data = $GLOBALS['data'];
-  
+
   if (!isset($used)) {
     return $data;
-    
+
     //try {
     //  $sql = "SELECT * FROM phones;"
     //  $result = DB::query($sql);
@@ -89,14 +143,14 @@ function findAllPhones ($used) {
     //  return 'Error ' . $e;
     //}
   }
-  
+
   for ($i = 0; $i < count($data); $i += 1) {
     $row = $data[$i];
-    if ($row.used === $used) {
+    if ($row['used'] === $used && $row['visible'] === 1) {
       $result[] = $row;
     }
   }
-    
+
   return $result;
 
   //try {
@@ -107,13 +161,13 @@ function findAllPhones ($used) {
   //  header("HTTP/1.0 400 Bad Request");
   //  return 'Error ' . $e;
   //}
-  
+
 }
 
 function deleteById ($request) {
   $id = $request->id;
   return 'Deleted ' . $id;
-  
+
 //  try{
 //		$sql = 'UPDATE `phones` SET `visible` = 0 WHERE id=' . intval($id);
 //		$result = DB::query($sql);
@@ -122,14 +176,14 @@ function deleteById ($request) {
 //    header("HTTP/1.0 400 Bad Request");
 //    return 'Error ' . $e;
 //  }
-  
+
 }
 
 function activateById ($request) {
   $id = $request->id;
-  
+
   return 'Activated ' . $id;
-  
+
 //  try{
 //		$sql = 'UPDATE `phones` SET `visible` = 1 WHERE id=' . intval($id);
 //		$result = DB::query($sql);
@@ -138,12 +192,12 @@ function activateById ($request) {
 //    header("HTTP/1.0 400 Bad Request");
 //    return 'Error ' . $e;
 //  }
-  
+
 }
 
 function savePhone ($request) {
   $phone = $request->phone;
-  
+
   $model = $phone->name;
   $desc = $phone->description;
   $price = $phone->price;
@@ -164,12 +218,12 @@ function savePhone ($request) {
   $used = (($phone->used === 'true') ? 1 : 0);
   $pictures = $phone->pictures;
   $pictureNames = array();
-  
+
   for ($i = 0, $len = count($pictures); $i < $len; $i += 1) {
     $src = $pictures[$i]->src;
     $pictureName = $pictures[$i]->name;
     $pictureNames[] = $pictureName;
-    
+
     if (strpos(strtolower($src), 'uploads') !== false) {
       continue;
     }
@@ -179,16 +233,16 @@ function savePhone ($request) {
     $src = base64_decode($src);
     $srcPath = '../app/uploads/' . $pictureName;
     $srcPathSmall = '../app/uploads/small/' . $pictureName;
-    
+
     file_put_contents($srcPath, $src);
-    
+
     $tmp = resize(1366, $srcPath);
 		$tmp_small = resize(250, $srcPath);
-    
+
     imagejpeg($tmp, $srcPath, 100);
 		imagejpeg($tmp_small, $srcPathSmall, 100);
   }
-  
+
   if (isset($phone->id)) {
     $id = $phone->id;
     //TODO update
@@ -246,7 +300,7 @@ function savePhone ($request) {
   //    return 'Error ' . $e;
   //  }
   }
-  
+
   return 'Updated ' . $id;
 }
 

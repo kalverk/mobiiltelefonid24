@@ -14,8 +14,8 @@ angular.module('mobiiltelefonid24App')
     this.findAllUsedPhones = function () {
       return $http({
         method: 'GET',
-        url: 'api/phones.php',
-        data : {
+        url: '../api/phones.php',
+        params : {
           type: 'findAllUsedPhones'
         }
       });
@@ -24,9 +24,30 @@ angular.module('mobiiltelefonid24App')
     this.findAllNewPhones = function () {
       return $http({
         method: 'GET',
-        url: 'api/phones.php',
-        data : {
+        url: '../api/phones.php',
+        params : {
           type: 'findAllNewPhones'
+        }
+      });
+    };
+
+    this.findTop10 = function () {
+      return $http({
+        method: 'GET',
+        url: '../api/phones.php',
+        params : {
+          type: 'findTop10'
+        }
+      });
+    };
+
+    this.findById = function (id) {
+      return $http({
+        method: 'GET',
+        url: '../api/phones.php',
+        params : {
+          type: 'findById',
+          id: id
         }
       });
     };

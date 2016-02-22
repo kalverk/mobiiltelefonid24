@@ -10,18 +10,33 @@
 angular.module('mobiiltelefonid24App')
   .controller('PhonesCtrl', function ($scope, $location, PhonesService) {
 
-    $scope.usedPhones = $location.url() === '/kasutatud_telefonid' ? true: false;
+    $location.url() === '/kasutatud_telefonid' ? findAllUsedPhones(): findAllNewPhones();
 
-    $scope.phoneList = PhonesService.findAllUsedPhones().then(function(message) {
-      console.log(message, 'success');
-    }, function (message) {
-      console.log(message, 'failed');
-    });
+    $scope.list = true;
 
-    $scope.phoneList = PhonesService.findAllNewPhones().then(function(message) {
-      console.log(message, 'success');
-    }, function (message) {
-      console.log(message, 'failed');
-    });
+    function findAllUsedPhones () {
+      PhonesService.findAllUsedPhones().then(function(message) {
+        $scope.phoneList = message.data;
+      }, function (message) {
+        AlertService.addAlert('danger', 'Ei suutnud telefonide listi laadida', 5000);
+      });
+    };
+
+    function findAllNewPhones () {
+      PhonesService.findAllNewPhones().then(function(message) {
+        $scope.phoneList = message.data;
+      }, function (message) {
+        AlertService.addAlert('danger', 'Ei suutnud telefonide listi laadida', 5000);
+      });
+    };
+
+    $scope.getFirstPicture = function (pictures) {
+      pictures = pictures.split(';');
+      return 'uploads/small/' + pictures[0];
+    };
+
+    $scope.details = function (phone) {
+      $location.path('/info/' + phone.id);
+    };
 
   });

@@ -1,0 +1,13 @@
+<div class="form-signin">
+  <div class="panel-body">
+    <label for="name">Nimi: </label><br />
+    <input id="name" type="text" placeholder="Nimi" required class="form-control" ng-model="params.name">
+    <span class="has-error" ng-show="params.wrongName">Nime väli vigane</span><br />
+    <label for="mail">Email: </label><br />
+    <input id="mail" type="email" placeholder="Email" required class="form-control" ng-model="params.email">
+    <span class="has-error" ng-show="params.wrongEmail">Emaili väli vigane</span><br />
+    <label for="question">Küsimus</label><br />
+    <textarea id="question" type="text" placeholder="Küsimus" required rows="4" cols="25" class="form-control" ng-model="params.query" style="resize: none;"></textarea>
+    <span class="has-error" ng-show="params.wrongQuery">Küsimuse väli vigane</span>
+  </div>
+</div>

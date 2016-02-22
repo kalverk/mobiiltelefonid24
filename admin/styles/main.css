@@ -13,3 +13,12 @@
   width: 75%;
   padding-top: 8px;
 }
+
+.custom-alert {
+  position: absolute;
+  width: 400px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 100;
+}

@@ -8,7 +8,7 @@
  * Controller of the mobiiltelefonid24App
  */
 angular.module('mobiiltelefonid24App')
-  .controller('ContactCtrl', function ($scope, $http) {
+  .controller('ContactCtrl', function ($scope, EmailService) {
     $scope.page = {
       title: 'Kontakt',
       description: 'Mobiiltelefonid24 tegeleb mobiiltelefonide ja tarvikute müügiga.'
@@ -64,21 +64,12 @@ angular.module('mobiiltelefonid24App')
       $scope.alert.type = 'success';
       $scope.alert.msg = 'Kiri saadetud!';
       $scope.alert.show = true;
-      console.log(mail);
 
-      $http(
-      {
-        method: 'POST',
-        url: 'api/email.php',
-        data : $scope.mail
-      }
-      ).then(function(message) {
-        console.log(message, 'success');
+      EmailService.sendEmail(mail).then(function(message) {
         $scope.alert.type = 'success';
         $scope.message = message;
         $scope.alert.show = true;
       }, function (message) {
-        console.log(message, 'failed');
         $scope.alert.type = 'danger';
         $scope.message = message;
         $scope.alert.show = true;

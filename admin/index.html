@@ -35,23 +35,13 @@
 
         <a class="navbar-brand" href="#/">Mobiiltelefonid24</a>
       </div>
-
-      <!--<div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-        <ul class="nav navbar-nav" ng-click="">
-          <li ng-class="{ active: isActive('/uued_telefonid')}"><a ng-href="#/uued_telefonid">Uued telefonid</a></li>
-          <li ng-class="{ active: isActive('/kasutatud_telefonid')}"><a ng-href="#/kasutatud_telefonid">Kasutatud telefonid</a></li>
-          <li ng-class="{ active: isActive('/tarvikud')}"><a ng-href="#/tarvikud">Tarvikud</a></li>
-          <li ng-class="{ active: isActive('/kontakt')}"><a ng-href="#/kontakt">Contact</a></li>
-        </ul>
-      </div>-->
     </div>
   </div>
 </div>
 
 <div class="container">
-  <div ng-controller="AlertCtrl"> 
-    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="{{alert.ms}}">{{alert.msg}}</uib-alert>
+  <div ng-controller="AlertCtrl">
+    <uib-alert class="custom-alert" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="{{alert.ms}}">{{alert.msg}}</uib-alert>
   </div>
   <div ng-view=""></div>
 </div>
