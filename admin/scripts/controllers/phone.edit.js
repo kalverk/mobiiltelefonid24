@@ -15,11 +15,11 @@ angular.module('mobiiltelefonid24App')
     $scope.prefill = function (model) {
       PhonesEditService.prefill(model);
     };
-    
+
     $scope.removePicture = function (idx) {
       PhonesEditService.removePicture(idx);
     };
-    
+
     $scope.save = function () {
       $scope.$parent.panels[0].title = 'Lisa uus telefon';
       PhonesService.savePhone($scope.phone).then(function(message) {
@@ -32,5 +32,9 @@ angular.module('mobiiltelefonid24App')
         AlertService.addAlert('danger', 'Salvestamine ebaõnnestus', 5000);
       });
     };
-    
+
+    $scope.clear = function () {
+      PhonesEditService.resetForm();
+    };
+
   });

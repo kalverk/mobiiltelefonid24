@@ -12,7 +12,7 @@ angular.module('mobiiltelefonid24App')
 
     function findById (id) {
       PhonesService.findById(id).then(function(message) {
-        $scope.phone = message.data;
+        $scope.phone = message.data[0];
       }, function (message) {
         AlertService.addAlert('danger', 'Ei suutnud telefoni leida', 5000);
       });
@@ -40,7 +40,7 @@ angular.module('mobiiltelefonid24App')
       });
 
       modalInstance.result.then(function (data) {
-        EmailService.sendEmail(mail).then(function(message) {
+        EmailService.sendEmail({name: data.name, email: data.email, query: data.query}).then(function(message) {
           AlertService.addAlert('success', 'Päring saadetud', 5000);
         }, function (message) {
           AlertService.addAlert('danger', 'Ei suutnud päringut saata');

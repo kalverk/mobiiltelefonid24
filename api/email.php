@@ -8,8 +8,8 @@ $query = $request->query;
 
 $to = 'mobiiltelefonid24@gmail.com';
 $subject = 'mobiiltelefonid24.ee ' . $name;
-$txt = 'From: ' . $email . '\r\n' . ' Name: ' . $name . '\r\n' . ' Text: ' . $text . '\r\n';
-$headers = 'From: $email\r\n';
+$txt = 'From: ' . $email . PHP_EOL . ' Name: ' . $name . PHP_EOL  . ' Text: ' . $query . PHP_EOL;
+$headers = 'From: ' . $email;
 
 if (mail($to, $subject, $txt, $headers)) {
   echo json_encode(array('message' => 'Kiri saadetud!'));

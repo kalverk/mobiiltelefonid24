@@ -69,11 +69,18 @@ angular.module('mobiiltelefonid24App')
         $scope.alert.type = 'success';
         $scope.message = message;
         $scope.alert.show = true;
+        resetMail();
       }, function (message) {
         $scope.alert.type = 'danger';
         $scope.message = message;
         $scope.alert.show = true;
       });
-    }
+    };
+
+    function resetMail () {
+      $scope.mail.name = '';
+      $scope.mail.email = '';
+      $scope.mail.query = '';
+    };
 
   });

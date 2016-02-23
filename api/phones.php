@@ -10,11 +10,9 @@ if (!$type) {
   $type = $request->type;
 }
 
-$data = (array)json_decode(file_get_contents('phones.json'), true);
-
-//require 'meekrodb.2.3.class.php';
-//$requestURL = $_SERVER['REQUEST_URI'];
-//connect();
+require_once('meekrodb.2.3.class.php');
+$requestURL = $_SERVER['REQUEST_URI'];
+connect();
 
 $result = [];
 
@@ -51,22 +49,14 @@ switch ($type) {
 }
 
 function findTop10 () {
-  $data = $GLOBALS['data'];
 
-  $result = array();
-  for ($i = 0; $i < 10; $i += 1) {
-    $result[] = $data[$i];
-  }
-
-  return $result;
-
-  /*try {
+  try {
     $sql = "SELECT * FROM phones where visible=1 ORDER BY views DESC LIMIT 10";
     $result = DB::query($sql);
     return $result;
   } catch(MeekroDBException $e) {
     return 'Error ' . $e;
-  }*/
+  }
 
 }
 
@@ -78,23 +68,14 @@ function findByName () {
     return 'No mobile found';
   }
 
-  $data = $GLOBALS['data'];
-  for ($i = 0; $i < count($data); $i += 1) {
-    $row = $data[$i];
-
-    if (strpos(strtolower($row['name']), strtolower($name)) !== false) {
-      return $row;
-    }
+  try {
+    $sql = "SELECT * FROM phones where name = " . mysql_escape_string($name);
+    $result = DB::query($sql);
+    return $result;
+  } catch(MeekroDBException $e) {
+    header("HTTP/1.0 400 Bad Request");
+    return 'Error ' . $e;
   }
-
-  //try {
-  //  $sql = "SELECT * FROM phones where name = " . mysql_escape_string($name);
-  //  $result = DB::query($sql);
-  //  return $result;
-  //} catch(MeekroDBException $e) {
-  //  header("HTTP/1.0 400 Bad Request");
-  //  return 'Error ' . $e;
-  //}
 
 }
 
@@ -106,92 +87,67 @@ function findById () {
     return 'No mobile found';
   }
 
-  $data = $GLOBALS['data'];
-  for ($i = 0; $i < count($data); $i += 1) {
-    $row = $data[$i];
-
-    if ($row['id'] === intval($id)) {
-      return $row;
-    }
+  try {
+    $sql = "SELECT * FROM phones where id = " . intval($id);
+    $result = DB::query($sql);
+    return $result;
+  } catch(MeekroDBException $e) {
+    header("HTTP/1.0 400 Bad Request");
+    return 'Error ' . $e;
   }
-
-  //try {
-  //  $sql = "SELECT * FROM phones where id = " . intval($id);
-  //  $result = DB::query($sql);
-  //  return $result;
-  //} catch(MeekroDBException $e) {
-  //  header("HTTP/1.0 400 Bad Request");
-  //  return 'Error ' . $e;
-  //}
 
 }
 
 function findAllPhones ($used) {
   $result = [];
 
-  $data = $GLOBALS['data'];
-
   if (!isset($used)) {
-    return $data;
-
-    //try {
-    //  $sql = "SELECT * FROM phones;"
-    //  $result = DB::query($sql);
-    //  return $result;
-    //} catch(MeekroDBException $e) {
-    //  header("HTTP/1.0 400 Bad Request");
-    //  return 'Error ' . $e;
-    //}
-  }
-
-  for ($i = 0; $i < count($data); $i += 1) {
-    $row = $data[$i];
-    if ($row['used'] === $used && $row['visible'] === 1) {
-      $result[] = $row;
+    try {
+      $sql = "SELECT * FROM phones;";
+      $result = DB::query($sql);
+      return $result;
+    } catch(MeekroDBException $e) {
+      header("HTTP/1.0 400 Bad Request");
+      return 'Error ' . $e;
     }
   }
 
-  return $result;
-
-  //try {
-  //  $sql = "SELECT * FROM phones where visible = " . intval($used);
-  //  $result = DB::query($sql);
-  //  return $result;
-  //} catch(MeekroDBException $e) {
-  //  header("HTTP/1.0 400 Bad Request");
-  //  return 'Error ' . $e;
-  //}
+  try {
+    $sql = "SELECT * FROM phones where visible = 1 && used = " . intval($used);
+    $result = DB::query($sql);
+    return $result;
+  } catch(MeekroDBException $e) {
+    header("HTTP/1.0 400 Bad Request");
+    return 'Error ' . $e;
+  }
 
 }
 
 function deleteById ($request) {
   $id = $request->id;
-  return 'Deleted ' . $id;
 
-//  try{
-//		$sql = 'UPDATE `phones` SET `visible` = 0 WHERE id=' . intval($id);
-//		$result = DB::query($sql);
-//		return 'Deleted ' . $id;
-//	} catch(MeekroDBException $e) {
-//    header("HTTP/1.0 400 Bad Request");
-//    return 'Error ' . $e;
-//  }
+  try{
+		$sql = 'UPDATE `phones` SET `visible` = 0 WHERE id=' . intval($id);
+		$result = DB::query($sql);
+		return 'Deleted ' . $id;
+	} catch(MeekroDBException $e) {
+    header("HTTP/1.0 400 Bad Request");
+    return 'Error ' . $e;
+  }
 
 }
 
 function activateById ($request) {
   $id = $request->id;
 
-  return 'Activated ' . $id;
-
-//  try{
-//		$sql = 'UPDATE `phones` SET `visible` = 1 WHERE id=' . intval($id);
-//		$result = DB::query($sql);
-//		return 'Activated ' . $id;
-//	} catch(MeekroDBException $e) {
-//    header("HTTP/1.0 400 Bad Request");
-//    return 'Error ' . $e;
-//  }
+  try{
+		$sql = 'UPDATE `phones` SET `visible` = 1 WHERE id=' . intval($id);
+		$result = DB::query($sql);
+		return 'Activated ' . $id;
+	} catch(MeekroDBException $e) {
+    header("HTTP/1.0 400 Bad Request");
+    return 'Error ' . $e;
+  }
 
 }
 
@@ -245,63 +201,63 @@ function savePhone ($request) {
 
   if (isset($phone->id)) {
     $id = $phone->id;
-    //TODO update
-  //  DB::update('phones', array(
-  //		'name' => $model,
-  //		'description' => $desc,
-  //		'price' => $price,
-  //		'views' => 0,
-  //		'used' => $used,
-  //		'sim' => $sim,
-  //		'size' => $size,
-  //		'weight' => $weight,
-  //		'cardSlot' => $cardSlot,
-  //		'nfc' => $nfc,
-  //		'cameraF' => $cameraF,
-  //		'cameraB' => $cameraB,
-  //		'video' => $video,
-  //		'os' => $os,
-  //		'cpu' => $cpu,
-  //		'gps' => $gps,
-  //		'internal' => $internal,
-  //		'gprs' => $gprs,
-  //		'wlan' => $wlan,
-  //		'pictures' => join(';', $pictureNames)
-  //	), "id=%i", $id);
+    try{
+      DB::update('phones', array(
+        'name' => $model,
+        'description' => $desc,
+        'price' => $price,
+        'used' => $used,
+        'sim' => $sim,
+        'size' => $size,
+        'weight' => $weight,
+        'cardSlot' => $cardSlot,
+        'nfc' => $nfc,
+        'cameraF' => $cameraF,
+        'cameraB' => $cameraB,
+        'video' => $video,
+        'os' => $os,
+        'cpu' => $cpu,
+        'gps' => $gps,
+        'internal' => $internal,
+        'gprs' => $gprs,
+        'wlan' => $wlan,
+        'pictures' => join(';', $pictureNames)
+      ), "id=%i", $id);
+  	  return 'Updated ' . $id;
+    } catch(MeekroDBException $e) {
+      header("HTTP/1.0 400 Bad Request");
+      return 'Error ' . $e;
+    }
   } else {
-    $id = 'just added id';
-  //TODO insert new
-  //	try{
-  //    DB::insert('phones', array(
-  //        'name' => $model,
-  //        'description' => $desc,
-  //        'price' => $price,
-  //        'views' => 0,
-  //        'used' => $used,
-  //        'sim' => $sim,
-  //        'size' => $size,
-  //        'weight' => $weight,
-  //        'cardSlot' => $cardSlot,
-  //        'nfc' => $nfc,
-  //        'cameraF' => $cameraF,
-  //        'cameraB' => $cameraB,
-  //        'video' => $video,
-  //        'os' => $os,
-  //        'cpu' => $cpu,
-  //        'gps' => $gps,
-  //        'internal' => $internal,
-  //        'gprs' => $gprs,
-  //        'wlan' => $wlan,
-  //        'pictures' => join(';', $pictureNames)
-  //    ));
-  //    return 'Saved ' . $id;
-  //	} catch(MeekroDBException $e) {
-  //    header("HTTP/1.0 400 Bad Request");
-  //    return 'Error ' . $e;
-  //  }
+  	try{
+      DB::insert('phones', array(
+          'name' => $model,
+          'description' => $desc,
+          'price' => $price,
+          'views' => 0,
+          'used' => $used,
+          'sim' => $sim,
+          'size' => $size,
+          'weight' => $weight,
+          'cardSlot' => $cardSlot,
+          'nfc' => $nfc,
+          'cameraF' => $cameraF,
+          'cameraB' => $cameraB,
+          'video' => $video,
+          'os' => $os,
+          'cpu' => $cpu,
+          'gps' => $gps,
+          'internal' => $internal,
+          'gprs' => $gprs,
+          'wlan' => $wlan,
+          'pictures' => join(';', $pictureNames)
+      ));
+      return 'Saved';
+  	} catch(MeekroDBException $e) {
+      header("HTTP/1.0 400 Bad Request");
+      return 'Error ' . $e;
+    }
   }
-
-  return 'Updated ' . $id;
 }
 
 function resize($newWidth, $uploadedfile){
@@ -317,9 +273,9 @@ function resize($newWidth, $uploadedfile){
 
 function connect() {
 	DB::$host = '';
-	DB::$user = '';
-	DB::$password = '';
-	DB::$dbName = '';
+  DB::$user = '';
+  DB::$password = '';
+  DB::$dbName = '';
 }
 
 echo json_encode($result);

@@ -8,7 +8,7 @@
  * Controller of the mobiiltelefonid24App
  */
 angular.module('mobiiltelefonid24App')
-  .controller('PhonesCtrl', function ($scope, $location, PhonesService) {
+  .controller('PhonesCtrl', function ($scope, $location, PhonesService, AlertService) {
 
     $location.url() === '/kasutatud_telefonid' ? findAllUsedPhones(): findAllNewPhones();
 

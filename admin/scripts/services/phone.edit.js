@@ -10,17 +10,17 @@
 
 angular.module('mobiiltelefonid24App')
   .service('PhonesEditService', function (AlertService, PhonesService) {
-  
+
     this.phone = {};
-            
+
     this.prefill = function (model) {
       PhonesService.findByName(model).then(function(message) {
-        this.prefillPhone(message.data, true);
+        this.prefillPhone(message.data[0], true);
       }.bind(this), function (message) {
         AlertService.addAlert('danger', 'Ei suutnud välju eeltäita', 5000);
       });
     };
-    
+
     this.prefillPhone = function (data, isNew) {
       if (!isNew) {
         this.phone.id = data.id;
@@ -47,14 +47,14 @@ angular.module('mobiiltelefonid24App')
       this.phone.visible = data.visible;
       this.getPictureArray(data.pictures);
     };
-    
+
     this.setPhonePicture = function (picture) {
       if (!this.phone.pictures) {
         this.phone.pictures = [];
       }
       this.phone.pictures.push(picture);
     };
-    
+
     this.getPictureArray = function (pictures) {
       if (!this.phone.pictures) {
         this.phone.pictures = [];
@@ -73,13 +73,13 @@ angular.module('mobiiltelefonid24App')
         this.phone.pictures.push(image);
       }
     };
-    
+
     this.removePicture = function (idx) {
       this.phone.pictures.splice(idx,1);
     };
-    
-    this.resetForm = function (idx) {
+
+    this.resetForm = function () {
       this.prefillPhone({});
     };
-    
+
   });
